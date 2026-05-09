@@ -1,44 +1,44 @@
 ```markdown
-# Fix: Geen geluid op Acer AG15-71P (Kali Linux / Raptor Lake Audio)
+# Fix: No Sound on Acer AG15-71P (Kali Linux / Raptor Lake Audio)
 
-**Probleem:** De interne speakers geven geen geluid in Linux vanwege een conflict met de moderne SOF-driver en de digitale microfoon op de Intel Raptor Lake-P/U/H cAVS audiochip.  
-**Oplossing:** Forceer de oudere, stabielere HDA-driver en schakel de detectie van de digitale microfoon uit via de kernel parameters.
+**Problem:** The internal speakers produce no sound in Linux due to a conflict between the modern SOF driver and the digital microphone on the Intel Raptor Lake-P/U/H cAVS audio chip.  
+**Solution:** Force the older, more stable HDA driver and disable the digital microphone detection via kernel parameters.
 
-## Stappenplan
+## Step-by-Step Guide
 
-### 1. Pas het GRUB-configuratiebestand aan
-Open de terminal en bewerk het GRUB-bestand met root-rechten:
+### 1. Edit the GRUB configuration file
+Open the terminal and edit the GRUB file with root privileges:
 ```bash
 sudo nano /etc/default/grub
 ```
 
-### 2. Voeg de kernel parameters toe
-Zoek de regel die begint met `GRUB_CMDLINE_LINUX_DEFAULT`. Voeg de volgende parameters toe aan het einde (binnen de aanhalingstekens):
+### 2. Add the kernel parameters
+Find the line starting with `GRUB_CMDLINE_LINUX_DEFAULT`. Add the following parameters to the end of the line (inside the quotation marks):
 `snd-intel-dspcfg.dsp_driver=1 snd_hda_intel.dmic_detect=0`
 
-De regel ziet er dan ongeveer zo uit:
+The line should look something like this:
 ```text
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash snd-intel-dspcfg.dsp_driver=1 snd_hda_intel.dmic_detect=0"
 ```
-*Sla het bestand op (`Ctrl + O`, `Enter`) en sluit af (`Ctrl + X`).*
+*Save the file (`Ctrl + O`, `Enter`) and exit nano (`Ctrl + X`).*
 
-### 3. Update GRUB en herstart
-Voer de wijzigingen door in de bootloader en herstart de laptop:
+### 3. Update GRUB and reboot
+Apply the changes to the bootloader and restart the laptop:
 ```bash
 sudo update-grub
 sudo reboot
 ```
 
-### 4. Controleer het volume (Alsamixer)
-Na de herstart kan het geluid door de nieuwe driver standaard gedempt (muted) zijn.
-1. Open de terminal en start Alsamixer:
+### 4. Check the volume (Alsamixer)
+After rebooting, the sound might be muted by default due to the driver change.
+1. Open the terminal and start Alsamixer:
    ```bash
    alsamixer
    ```
-2. Druk op **F6** en selecteer de geluidskaart (bijv. *HDA Intel PCH*).
-3. Controleer of de kanalen (zoals *Master* en *Speaker*) onderaan op **[MM]** (gedempt) staan.
-4. Gebruik de pijltjestoetsen (links/rechts) om te navigeren, druk op **M** om te unmuten (verandert naar **[00]**) en zet het volume op 100% met pijltje omhoog.
-5. Druk op **Esc** om af te sluiten.
+2. Press **F6** and select your sound card (e.g., *HDA Intel PCH*).
+3. Check if the channels (such as *Master* and *Speaker*) show **[MM]** (muted) at the bottom.
+4. Use the arrow keys (left/right) to navigate, press **M** to unmute (it will change to **[00]**), and set the volume to 100% using the up arrow key.
+5. Press **Esc** to exit.
 ```
 
-Je kunt deze tekst direct kopiëren en opslaan. Mocht je Kali Linux in de toekomst opnieuw installeren, dan heb je de oplossing direct bij de hand!
+You can copy this directly into a `.md` file in your GitHub repository or personal notes!

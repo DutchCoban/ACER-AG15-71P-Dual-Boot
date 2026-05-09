@@ -12,7 +12,7 @@ Open the terminal and edit the GRUB file with root privileges:
 sudo nano /etc/default/grub
 ```
 
-### 2. Add the kernel parameters
+### 1. Add the kernel parameters
 Find the line starting with `GRUB_CMDLINE_LINUX_DEFAULT`. Add the following parameters to the end of the line (inside the quotation marks):
 `snd-intel-dspcfg.dsp_driver=1 snd_hda_intel.dmic_detect=0`
 
@@ -22,14 +22,14 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet splash snd-intel-dspcfg.dsp_driver=1 snd_hda_i
 ```
 *Save the file (`Ctrl + O`, `Enter`) and exit nano (`Ctrl + X`).*
 
-### 3. Update GRUB and reboot
+### 2. Update GRUB and reboot
 Apply the changes to the bootloader and restart the laptop:
 ```bash
 sudo update-grub
 sudo reboot
 ```
 
-### 4. Check the volume (Alsamixer)
+### 3. Check the volume (Alsamixer)
 After rebooting, the sound might be muted by default due to the driver change.
 1. Open the terminal and start Alsamixer:
    ```bash
